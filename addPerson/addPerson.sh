@@ -53,7 +53,6 @@ wargames=$(echo "${argInterest}" | grep --ignore-case --count '[wf]')
 social=$(echo "${argInterest}" | grep --ignore-case --count 's')
 
 sqlite3 "${DATABASE}" <<- END
-	.echo on
 	.parameter set :firstName "${firstName}"
 	.parameter set :lastName "${lastName}"
 	.parameter set :nickname "${nickname}"
@@ -66,33 +65,5 @@ sqlite3 "${DATABASE}" <<- END
 	.parameter set :wargames "${wargames}"
 	.parameter set :social "${social}"
 
-	INSERT INTO \`person\`(
-		\`id\`,
-		\`firstName\`,
-		\`lastName\`,
-		\`nickName\`,
-		\`phone\`,
-		\`email\`,
-		\`board\`,
-		\`cards\`,
-		\`rpg\`,
-		\`videogames\`,
-		\`wargames\`,
-		\`social\`,
-		\`death\`
-	) VALUES (
-		RANDOMBLOB(16),
-		:firstName,
-		:lastName,
-		:nickname,
-		:phone,
-		:email,
-		:board,
-		:cards,
-		:rpg,
-		:videogames,
-		:wargames,
-		:social,
-		NULL
-	);
+	.read "$(dirname "${0}")/addPerson.sql"
 END

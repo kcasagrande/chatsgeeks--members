@@ -1,0 +1,36 @@
+INSERT INTO `person`(
+	`id`,
+	`firstName`,
+	`lastName`,
+	`nickName`,
+	`phone`,
+	`email`,
+	`board`,
+	`cards`,
+	`rpg`,
+	`videogames`,
+	`wargames`,
+	`social`,
+	`death`
+) VALUES (
+	RANDOMBLOB(16),
+	:firstName,
+	:lastName,
+	:nickname,
+	:phone,
+	:email,
+	:board,
+	:cards,
+	:rpg,
+	:videogames,
+	:wargames,
+	:social,
+	NULL
+);
+SELECT
+	HEX(`id`)
+FROM
+	`person`
+WHERE
+	`rowid`=LAST_INSERT_ROWID()
+;
